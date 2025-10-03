@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import config from './config.js';
 import cors from 'cors'; 
 //Import routes
-import empleadosRoutes from './routes/empleados.routes.js';
 import citasRoutes from './routes/citas.routes.js';
 
 dotenv.config();
@@ -18,7 +17,6 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}));
 
 //Routes
-app.use(empleadosRoutes);
 app.use(citasRoutes);
 
 
