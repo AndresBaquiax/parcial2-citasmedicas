@@ -1,11 +1,11 @@
-import { getConnection, querysEmpleados } from "../database/index.js";
+import { getConnection, querysPacientes } from "../database/index.js";
 
 // --------------------- GET ---------------------
-export const getEmpleados = async (req, res) => {
+export const getPacientes = async (req, res) => {
     try {
         // Obtenemos la conexion
         const connection = await getConnection();
-        const result = await connection.query(querysEmpleados.getEmpleados);
+        const result = await connection.query(querysPacientes.getPacientes);
         // Liberamos la conexion
         connection.release();
         res.json(result.rows);
@@ -15,7 +15,7 @@ export const getEmpleados = async (req, res) => {
 };
 
 // --------------------- POST ---------------------
-export const postEmpleado = async (req, res) => {
+export const postPaciente = async (req, res) => {
     try {
         const { nombre, apellido, telefono, email, cargo } = req.body;
 
@@ -25,10 +25,10 @@ export const postEmpleado = async (req, res) => {
         }
 
         // Obtenemos la conexion
-        const empleado = await getConnection();
+        const Paciente = await getConnection();
 
         // Ejecutamos la consulta
-        await empleado.query(querysEmpleados.postEmpleado, [
+        await Paciente.query(querysPacientes.postPaciente, [
             nombre,
             apellido,
             telefono,
@@ -37,7 +37,7 @@ export const postEmpleado = async (req, res) => {
         ]);
 
         // Liberamos la conexion
-        empleado.release();
+        Paciente.release();
 
         res.json({ msg: "Employee added successfully" });
     } catch (error) {
@@ -46,9 +46,9 @@ export const postEmpleado = async (req, res) => {
 };
 
 // --------------------- PUT ---------------------
-export const putEmpleado = async (req, res) => {
+export const putPaciente = async (req, res) => {
     try {
-        const { idempleado } = req.params;
+        const { idPaciente } = req.params;
         const { nombre, apellido, telefono, email, cargo } = req.body;
 
         // Validamos los datos
@@ -57,20 +57,20 @@ export const putEmpleado = async (req, res) => {
         }
 
         // Obtenemos la conexion
-        const empleado = await getConnection();
+        const Paciente = await getConnection();
 
         // Ejecutamos la consulta
-        await empleado.query(querysEmpleados.putEmpleado, [
+        await Paciente.query(querysPacientes.putPaciente, [
             nombre,
             apellido,
             telefono,
             email,
             cargo,
-            idempleado
+            idPaciente
         ]);
 
         // Liberamos la conexion
-        empleado.release();
+        Paciente.release();
 
         res.json({ msg: "Employee updated successfully" });
     } catch (error) {
