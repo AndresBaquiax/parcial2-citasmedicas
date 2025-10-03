@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import config from './config.js';
 import cors from 'cors'; 
 //Import routes
+import pacienteRoutes from './routes/paciente.routes.js';
 import citasRoutes from './routes/citas.routes.js';
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(express.urlencoded({extended: false}));
 
 //Routes
 app.use(citasRoutes);
+app.use(pacienteRoutes);
 
 
 export default app;
