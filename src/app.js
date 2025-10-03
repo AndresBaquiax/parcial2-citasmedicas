@@ -6,6 +6,7 @@ import cors from 'cors';
 import medicosRoutes from './routes/medicos.routes.js';
 import pacienteRoutes from './routes/paciente.routes.js';
 import citasRoutes from './routes/citas.routes.js';
+import bonosRoutes from './routes/bonos.routes.js';
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(medicosRoutes);
 app.use(citasRoutes);
 app.use(pacienteRoutes);
+app.use(bonosRoutes);
 
 
 export default app;

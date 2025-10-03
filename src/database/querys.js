@@ -24,3 +24,33 @@ export const querysCitas = {
     putCita: "UPDATE Citas SET paciente_id = $1, medico_id = $2, fecha_cita = $3, motivo = $4, estado = $5, tipo = $6 WHERE cita_id = $7",
     deleteCita: "DELETE FROM Citas WHERE cita_id = $1"
 };
+
+export const querysBonos = {
+    // Obtener médicos con más de 50 pacientes únicos desde el lunes
+    getMedicosConMasDe50Pacientes: `
+        SELECT 
+            m.medico_id,
+            m.nombre,
+            m.apellido,
+            m.especialidad,
+            COUNT(DISTINCT c.paciente_id) as total_pacientes
+        FROM Medicos m
+        INNER JOIN Citas c ON m.medico_id = c.medico_id
+        WHERE c.fecha_cita >= date_trunc('week', CURRENT_DATE) -- Desde el lunes de esta semana
+        AND c.estado = 'Completada'
+        GROUP BY m.medico_id, m.nombre, m.apellido, m.especialidad
+        HAVING COUNT(DISTINCT c.paciente_id) > 50
+    `,
+    // Insertar un bono
+    insertBono: "INSERT INTO Bonos_Medicos (medico_id, monto, fecha_asignado) VALUES ($1, $2, $3) RETURNING *",
+    // Verificar si ya se asignó bono esta semana
+    verificarBonoSemana: `
+        SELECT * FROM Bonos_Medicos 
+        WHERE medico_id = $1 
+        AND fecha_asignado >= date_trunc('week', CURRENT_DATE)
+    `,
+    // Obtener todos los bonos
+    getBonos: "SELECT * FROM Bonos_Medicos ORDER BY fecha_asignado DESC",
+    // Obtener bonos por médico
+    getBonosPorMedico: "SELECT * FROM Bonos_Medicos WHERE medico_id = $1 ORDER BY fecha_asignado DESC"
+};
