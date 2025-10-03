@@ -8,8 +8,8 @@ export const querysEmpleados = {
 export const querysMedicos = {
     getMedicos: "SELECT * FROM medicos",
     postMedico: "INSERT INTO medicos (nombre, apellido, especialidad, telefono) VALUES ($1, $2, $3, $4)",
-    putMedico: "UPDATE medicos SET nombre = $1, apellido = $2, especialidad = $3, telefono = $4 WHERE medico_id = $6",
-    deleteMedico: "DELETE FROM medicos WHERE id = $1"
+    putMedico: "UPDATE medicos SET nombre = $1, apellido = $2, especialidad = $3, telefono = $4 WHERE medico_id = $5",
+    deleteMedico: "DELETE FROM medicos WHERE medico_id = $1"
 };
 export const querysPacientes = {
     getPacientes: "SELECT * FROM Pacientes",
